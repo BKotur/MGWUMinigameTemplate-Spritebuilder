@@ -9,6 +9,9 @@
 
 @implementation MyCharacter {
     float _velYPrev; // this tracks the previous velocity, it's used for animation
+    BOOL _isPullBack;
+    BOOL _isHolding;
+    BOOL _isThrow;
     BOOL _isIdling; // these BOOLs track what animations have been triggered.  By default, they're set to NO
     BOOL _isJumping;
     BOOL _isFalling;
@@ -29,11 +32,25 @@
 
 -(void)didLoadFromCCB {
     // Set up anything connected to Sprite Builder here
+    self.characterType = kCharacterGreen;
+    [self.animationManager runAnimationsForSequenceNamed:@"AnimSideIdling"];
+    self.physicsBody.collisionType = @"hero";
 }
 
 -(void)onEnter {
     [super onEnter];
     // Create anything you'd like to draw here
+}
+
+-(void)pullBack {
+    [self.animationManager runAnimationsForSequenceNamed:@"AnimSidePullBack"];
+    _isHolding = YES;
+
+}
+
+-(void)throwDart {
+    [self.animationManager runAnimationsForSequenceNamed:@"AnimSideThrow"];
+    _isHolding = NO;
 }
 
 -(void)update:(CCTime)delta {
@@ -42,18 +59,35 @@
     // delta will tell you how much time has passed since the last cycle (in seconds)
     
     // This sample method is called every update to handle character animation
+    //[self updateAnimations:delta];
     [self updateAnimations:delta];
 }
 
 -(void)updateAnimations:(CCTime)delta {
+
+    // Holding Animation
+    if (_isHolding) {
+        [self.animationManager runAnimationsForSequenceNamed:@"AnimSideHolding"];
+    }
     // IDLE
     // The animation should be idle if the character was and is stationary
     // The character may only start idling if he or she was not already idling or falling
-    if (_velYPrev == 0 && self.physicsBody.velocity.y == 0 && !_isIdling && !_isFalling) {
+    /*if (_velYPrev == 0 && self.physicsBody.velocity.y == 0 && !_isIdling && !_isFalling) {
         [self resetBools];
         _isIdling = YES;
-        [self.animationManager runAnimationsForSequenceNamed:@"AnimIsoIdling"];
+        [self.animationManager runAnimationsForSequenceNamed:@"AnimSideIdling"];
     }
+    else if (_velYPrev == 0 && self.physicsBody.velocity.y == 0 && _isIdling && !_isPullBack) {
+        [self resetBools];
+        _isPullBack = YES;
+        [self.animationManager runAnimationsForSequenceNamed:@"AnimSidePullBack"];
+    }
+    else if (_velYPrev == 0 && self.physicsBody.velocity.y == 0 && _isPullBack && !_isThrow) {
+        [self resetBools];
+        _isThrow = YES;
+        [self.animationManager runAnimationsForSequenceNamed:@"AnimSideThrow"];
+    }
+
     // JUMP
     // The animation should be jumping if the character wasn't moving up, but now is
     // The character may only start jumping if he or she was idling and isn't jumping
@@ -78,14 +112,16 @@
         _isLanding = YES;
         [self.animationManager runAnimationsForSequenceNamed:@"AnimIsoLand"];
     }
-    
+    */
     // We track the previous velocity, since it's important to determining how the character is and was moving for animations
-    _velYPrev = self.physicsBody.velocity.y;
+    //_velYPrev = self.physicsBody.velocity.y;
     
 }
 
 // This method is called before setting one to YES, so that only one is ever YES at a time
 -(void)resetBools {
+    //_isPullBack = NO;
+    //_isThrow = NO;
     _isIdling = NO;
     _isJumping = NO;
     _isFalling = NO;
@@ -95,7 +131,7 @@
 // This method tells the character to jump by giving it an upward velocity.
 // It's been added to a physics node in the main scene, like the penguins Peeved Penguins, so it will fall automatically!
 -(void)jump {
-    self.physicsBody.velocity = ccp(0,122);
+    //self.physicsBody.velocity = ccp(0,122);
 }
 
 @end

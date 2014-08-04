@@ -10,4 +10,7 @@
 
 @interface Dart : CCNode
 
+-(void)pullBack;
+-(void)throwDart;
+
 @end

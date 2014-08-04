@@ -10,4 +10,8 @@
 
 @implementation Balloon
 
+- (void)didLoadFromCCB {
+    self.physicsBody.collisionType = @"balloon";
+}
+
 @end

@@ -136,6 +136,9 @@
             if (_dart.position.x > 568.0f) {
                 [self dartRemoved:_dart];
                 _score = _score - 1;
+                if (_score < 0) {
+                    _score = 0;
+                }
             }
            
         }
@@ -145,6 +148,12 @@
 -(void)endMinigame {
     // Be sure you call this method when you end your minigame!
     // Of course you won't have a random score, but your score *must* be between 1 and 100 inclusive
+    if (_score < 1) {
+        _score = 1;
+    }
+    if (_score > 100) {
+        _score = 100;
+    }
     [self endMinigameWithScore:_score];
 }
 

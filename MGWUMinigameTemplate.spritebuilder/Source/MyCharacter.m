@@ -13,9 +13,6 @@
     BOOL _isHolding;
     BOOL _isThrow;
     BOOL _isIdling; // these BOOLs track what animations have been triggered.  By default, they're set to NO
-    BOOL _isJumping;
-    BOOL _isFalling;
-    BOOL _isLanding;
 }
 
 -(id)init {
@@ -32,7 +29,6 @@
 
 -(void)didLoadFromCCB {
     // Set up anything connected to Sprite Builder here
-    self.characterType = kCharacterGreen;
     [self.animationManager runAnimationsForSequenceNamed:@"AnimSideIdling"];
     self.physicsBody.collisionType = @"hero";
 }
@@ -59,7 +55,6 @@
     // delta will tell you how much time has passed since the last cycle (in seconds)
     
     // This sample method is called every update to handle character animation
-    //[self updateAnimations:delta];
     [self updateAnimations:delta];
 }
 
@@ -123,15 +118,6 @@
     //_isPullBack = NO;
     //_isThrow = NO;
     _isIdling = NO;
-    _isJumping = NO;
-    _isFalling = NO;
-    _isLanding = NO;
-}
-
-// This method tells the character to jump by giving it an upward velocity.
-// It's been added to a physics node in the main scene, like the penguins Peeved Penguins, so it will fall automatically!
--(void)jump {
-    //self.physicsBody.velocity = ccp(0,122);
 }
 
 @end

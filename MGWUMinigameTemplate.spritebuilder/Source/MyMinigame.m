@@ -20,16 +20,20 @@
     BOOL _gameOver;
     float _time;
     int _score;
+    BOOL _dartActive;
+    BOOL _dartThrown;
 
 }
 
 -(id)init {
     if ((self = [super init])) {
         // Initialize any arrays, dictionaries, etc in here
-        self.instructions = @"You have 60 seconds to pop as many balloons as you can.";
+        self.instructions = @"You have 60 seconds to pop as many balloons as you can.\nYou can only throw one dart at a time.\nGet 5 points for every popped balloon.  Lose 1 points for every miss.";
         _gameOver = NO;
         _time = 0.0f;
         _score = 0;
+        _dartActive = NO;
+        _dartThrown = NO;
         _balloonArray = [NSMutableArray array];
         
         
@@ -43,29 +47,37 @@
     _physicsNode.collisionDelegate = self;
 
     // Set up anything connected to Sprite Builder here
-    
-    // We're calling a public method of the character that tells it to jump!
-    //[self.hero jump];
 }
+
 -(void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event {
-    [self.hero pullBack];
-    _dart = (Dart*)[CCBReader load:@"Dart"];
+    if (!_dartActive) {
+        
+        [self.hero pullBack];
+        _dart = (Dart*)[CCBReader load:@"Dart"];
     
-    CGPoint dartPosition = [self.hero convertToWorldSpace:ccp(self.hero.position.x, self.hero.position.y)];
-    _dart.position = [_physicsNode convertToWorldSpace:dartPosition];
+        CGPoint dartPosition = [self.hero convertToWorldSpace:ccp(self.hero.position.x, self.hero.position.y)];
+        _dart.position = [_physicsNode convertToWorldSpace:dartPosition];
     
-    [_physicsNode addChild:_dart];
-    //[self.theDart pullBack];
+        [_dart pullBack];
+        [_physicsNode addChild:_dart];
+        _dartActive = YES;
+
+        [self.theDart pullBack];
+
+    }
 }
 
 -(void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
-    [self.hero throwDart];
-    //[self.theDart throwDart];
-    //_dart.physicsBody.velocity = ccp(5, 5);
-    CGPoint throwDirection = ccp(1, 1);
-    CGPoint force = ccpMult(throwDirection, 12000);
-    [_dart.physicsBody applyForce:force];
-    
+    if (_dartActive && !_dartThrown) {
+        [self.hero throwDart];
+        [_dart throwDart];
+        //[self.theDart throwDart];
+        //_dart.physicsBody.velocity = ccp(5, 5);
+        CGPoint throwDirection = ccp(1, 1);
+        CGPoint force = ccpMult(throwDirection, 12000);
+        [_dart.physicsBody applyForce:force];
+        _dartThrown = YES;
+    }
 }
 
 -(void)onEnter {
@@ -76,7 +88,7 @@
     [self updateScoreLabel];
     
     [self schedule:@selector(updateLabels) interval:0.1f];
-    [self schedule:@selector(spawnBalloon) interval:0.5f];
+    [self schedule:@selector(spawnBalloon) interval:1.0f];
     
     // Create anything you'd like to draw here
 }
@@ -100,6 +112,8 @@
         
         NSMutableArray* balloonToRemove = [NSMutableArray array];
         
+        // Make sure the balloons are on the screen
+        
         for (CCNode* balloon in _balloonArray) {
             if (balloon.position.y > 320.0f) {
                 [balloonToRemove addObject:balloon];
@@ -114,6 +128,16 @@
         for (CCNode* balloon in _balloonArray) {
             CGPoint velocity = CGPointMake(0, 6);
             balloon.position = ccpAdd(balloon.position, velocity);
+        }
+        
+        // Make sure the dart is on the screen
+        
+        if (_dartActive && _dartThrown) {
+            if (_dart.position.x > 568.0f) {
+                [self dartRemoved:_dart];
+                _score = _score - 1;
+            }
+           
         }
     }
 }
@@ -138,11 +162,14 @@
     [balloon.parent addChild:explosion];
     
     [balloon removeFromParent];
-    _score++;
+    _score = _score + 5;
 }
 
 -(void)dartRemoved:(CCNode *)dart {
     [dart removeFromParent];
+    _dartActive = NO;
+    _dartThrown = NO;
+
 }
 
 -(void)updateScoreLabel {

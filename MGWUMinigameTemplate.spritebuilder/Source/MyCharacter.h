@@ -9,7 +9,6 @@
 
 @interface MyCharacter : MGWUCharacter
 
--(void)jump;
 -(void)pullBack;
 -(void)throwDart;
 @end

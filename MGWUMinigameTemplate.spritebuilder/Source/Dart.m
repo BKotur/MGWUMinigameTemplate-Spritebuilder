@@ -30,26 +30,21 @@
     // delta will tell you how much time has passed since the last cycle (in seconds)
     
     // This sample method is called every update to handle character animation
-    //[self updateAnimations:delta];
     [self updateAnimations:delta];
 }
 
 -(void)updateAnimations:(CCTime)delta {
     
-    // Holding Animation
-    /*if (_isHolding) {
-        [self.animationManager runAnimationsForSequenceNamed:@"Hold"];
-    } else {
-        [self.animationManager runAnimationsForSequenceNamed:@"Arc"];
-    }*/
 }
 
 -(void)pullBack {
     _isHolding = YES;
+    [self.animationManager runAnimationsForSequenceNamed:@"Hold"];
 }
 
 -(void)throwDart {
     _isHolding = NO;
+    [self.animationManager runAnimationsForSequenceNamed:@"Arc"];
 }
 
 @end

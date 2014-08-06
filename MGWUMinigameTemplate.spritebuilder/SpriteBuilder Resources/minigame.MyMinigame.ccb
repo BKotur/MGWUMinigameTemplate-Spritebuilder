@@ -193,8 +193,6 @@
 						<string>MyCharacter.ccb</string>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -447,6 +445,8 @@
 						<real>0.5</real>
 					</dict>
 				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>UUID</key>
@@ -480,11 +480,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>39.000030517578125</real>
-							<real>12.99993896484375</real>
+							<real>0.068662025034427643</real>
+							<real>0.040624808520078659</real>
 							<integer>1</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -687,11 +687,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>65</real>
-							<real>12.99993896484375</real>
+							<real>0.11443661898374557</real>
+							<real>0.040624808520078659</real>
 							<integer>1</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -894,11 +894,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>112.00006103515625</real>
-							<real>13</real>
+							<real>0.19718320667743683</real>
+							<real>0.040999997407197952</real>
 							<integer>1</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>
@@ -1101,11 +1101,11 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>143</real>
-							<real>13</real>
+							<real>0.2517605721950531</real>
+							<real>0.040624998509883881</real>
 							<integer>1</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>2</integer>
+							<integer>2</integer>
 						</array>
 					</dict>
 					<dict>

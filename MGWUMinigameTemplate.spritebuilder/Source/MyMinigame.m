@@ -125,11 +125,6 @@
             [_balloonArray removeObject:balloon];
         }
         
-        for (CCNode* balloon in _balloonArray) {
-            CGPoint velocity = CGPointMake(0, 6);
-            balloon.position = ccpAdd(balloon.position, velocity);
-        }
-        
         // Make sure the dart is on the screen
         
         if (_dartActive && _dartThrown) {
@@ -196,6 +191,8 @@
     balloon = [CCBReader load:@"Balloon"];
     
     balloon.position = ccp((300 * CCRANDOM_0_1()) + 240, 30);
+    CGPoint velocity = CGPointMake(0, 80);
+    balloon.physicsBody.velocity = velocity;
     
     [_physicsNode addChild:balloon];
     [_balloonArray addObject:balloon];

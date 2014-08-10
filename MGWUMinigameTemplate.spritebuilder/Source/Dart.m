@@ -8,6 +8,7 @@
 
 #import "Dart.h"
 
+
 @implementation Dart {
     BOOL _isHolding;
 }
@@ -22,6 +23,10 @@
 
 - (void)didLoadFromCCB {
     self.physicsBody.collisionType = @"dart";
+    self.physicsBody.collisionGroup = @"dart";
+    self.scale = 0.5f;
+    //[self.physicsBody applyImpulse:ccp(-)]
+    [self setRotation:-45];
 }
 
 -(void)update:(CCTime)delta {
@@ -40,11 +45,14 @@
 -(void)pullBack {
     _isHolding = YES;
     [self.animationManager runAnimationsForSequenceNamed:@"Hold"];
+    self.anchorPoint = ccp(0, 0.5);
 }
 
 -(void)throwDart {
     _isHolding = NO;
     [self.animationManager runAnimationsForSequenceNamed:@"Arc"];
+    self.anchorPoint = ccp(0.5, 0.5);
+
 }
 
 @end

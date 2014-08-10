@@ -8,7 +8,7 @@
 
 #import "CCNode.h"
 
-@interface Dart : CCNode
+@interface Dart : CCSprite
 
 -(void)pullBack;
 -(void)throwDart;

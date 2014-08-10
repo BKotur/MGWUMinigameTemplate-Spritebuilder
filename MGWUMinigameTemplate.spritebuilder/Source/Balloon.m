@@ -12,6 +12,7 @@
 
 - (void)didLoadFromCCB {
     self.physicsBody.collisionType = @"balloon";
+    self.physicsBody.collisionGroup = @"balloon";
 }
 
 @end

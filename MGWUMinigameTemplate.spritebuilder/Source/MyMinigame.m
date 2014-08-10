@@ -191,7 +191,7 @@
     balloon = [CCBReader load:@"Balloon"];
     
     balloon.position = ccp((300 * CCRANDOM_0_1()) + 240, 30);
-    CGPoint velocity = CGPointMake(0, 80);
+    CGPoint velocity = CGPointMake(0, arc4random_uniform(150) + 25 /*80*/);
     balloon.physicsBody.velocity = velocity;
     
     [_physicsNode addChild:balloon];

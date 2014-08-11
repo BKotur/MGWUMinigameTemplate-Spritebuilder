@@ -38,7 +38,7 @@
 -(id)init {
     if ((self = [super init])) {
         // Initialize any arrays, dictionaries, etc in here
-        self.instructions = @"You have 60 seconds to pop as many balloons as you can.\nYou can only throw one dart at a time.\nGet 5 points for every popped balloon.  Lose 1 points for every miss.";
+        self.instructions = @"You have 60 seconds to pop as many balloons as you can.\nYou can only throw one dart at a time.\nGet 5 points for every popped balloon.";
         _gameOver = NO;
         _gameDone = NO;
         _time = 0.0f;
@@ -154,7 +154,7 @@
         if (_dartActive && _dartThrown) {
             if (_dart.position.x > 568.0f) {
                 [self dartRemoved:_dart];
-                _score--;
+                //_score--;
                 _misses++;
                 if (_score < 0) {
                     _score = 0;
@@ -244,7 +244,7 @@
     balloon = [CCBReader load:@"Balloon"];
     
     balloon.position = ccp((300 * CCRANDOM_0_1()) + 240, 30);
-    CGPoint velocity = CGPointMake(0, arc4random_uniform(200) + 25 /*80*/);
+    CGPoint velocity = CGPointMake(0, arc4random_uniform(200) + 25);
     balloon.physicsBody.velocity = velocity;
     
     [_physicsNode addChild:balloon];

@@ -86,17 +86,37 @@
 -(void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
     if (_dartActive && !_dartThrown) {
         _dart.physicsBody.type = CCPhysicsBodyTypeDynamic;
-
+        
+        CGPoint touchLocation = [self calculateThrowAngle:[touch locationInNode:self]];
+        
         
         [self.hero throwDart];
         [_dart throwDart];
-        CGPoint throwDirection = ccp(1, 1);
-        CGPoint force = ccpMult(throwDirection, 22000);
+        CGPoint throwDirection = ccp(touchLocation.x, touchLocation.y);
+        CGPoint force = ccpMult(throwDirection, 525);
         [_dart.physicsBody applyForce:force];
-        [_dart.physicsBody applyAngularImpulse:-135];
+        if (throwDirection.y < 40) {
+            [_dart.physicsBody applyAngularImpulse:-225];
+        } else if (throwDirection.y >= 40 && throwDirection.y < 80) {
+            [_dart.physicsBody applyAngularImpulse:-175];
+        } else if (throwDirection.y >= 80) {
+            [_dart.physicsBody applyAngularImpulse:-75];
+        } else if (throwDirection.y >= 100) {
+            [_dart.physicsBody applyAngularImpulse:-45];
+        }
         _dartThrown = YES;
         _dartsThrown++;
     }
+}
+
+-(CGPoint)calculateThrowAngle:(CGPoint)touchPosition {
+    CGPoint offset = ccpSub(touchPosition, self.hero.position);
+    float ratio = offset.y / offset.x;
+    int targetX = self.hero.contentSize.width / 2 + self.contentSize.width;
+    int targetY = (targetX * ratio) + self.hero.position.y;
+    CGPoint targetPosition = ccp(targetX, targetY);
+    
+    return targetPosition;
 }
 
 -(void)onEnter {
@@ -152,7 +172,7 @@
         // Make sure the dart is on the screen
         
         if (_dartActive && _dartThrown) {
-            if (_dart.position.x > 568.0f) {
+            if (_dart.position.x > 568.0f || _dart.position.y > 320.0f){
                 [self dartRemoved:_dart];
                 //_score--;
                 _misses++;

@@ -67,7 +67,7 @@
     if (!_dartActive) {
         
         [self.hero pullBack];
-        _dart = (Dart*)[CCBReader load:@"Dart"];
+        _dart = (Dart*)[CCBReader load:@"brankoKoturDart"];
     
         CGPoint dartPosition = [self.hero convertToWorldSpace:ccp(self.hero.position.x, self.hero.position.y)];
         _dart.position = [_physicsNode convertToWorldSpace:dartPosition];
@@ -233,7 +233,7 @@
 }
 
 -(void)balloonRemoved:(CCNode *)balloon {
-    CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"BalloonPop"];
+    CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"brankoKoturBalloonPop"];
     explosion.autoRemoveOnFinish = TRUE;
     explosion.position = balloon.position;
     [balloon.parent addChild:explosion];
@@ -261,7 +261,7 @@
 -(void)spawnBalloon {
     CCNode* balloon;
     
-    balloon = [CCBReader load:@"Balloon"];
+    balloon = [CCBReader load:@"brankoKoturBalloon"];
     
     balloon.position = ccp((300 * CCRANDOM_0_1()) + 240, 30);
     CGPoint velocity = CGPointMake(0, arc4random_uniform(200) + 25);

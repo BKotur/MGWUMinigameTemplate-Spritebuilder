@@ -9,7 +9,7 @@
 #import "cocos2d.h"
 #import "MGWUMinigame.h"
 #import "MyCharacter.h"
-#import "Dart.h"
+#import "brankoKoturDart.h"
 
 @interface MyMinigame : MGWUMinigame <CCPhysicsCollisionDelegate>
 
